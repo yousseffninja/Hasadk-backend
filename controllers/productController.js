@@ -1,7 +1,6 @@
 const Product = require('../models/productModel');
 const catchAsync = require('../utils/catchAsync');
 const factory = require('./handlerFactory');
-const AppError = require('../utils/appError');
 const {promisify} = require("util");
 const jwt = require("jsonwebtoken");
 const User = require('../models/userModel')
