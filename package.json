@@ -2,7 +2,7 @@
   "name": "hasadk-backend",
   "version": "1.0.0",
   "description": "",
-  "main": "index.js",
+  "main": "app.js",
   "scripts": {
     "start": "node server.js",
     "dev": "nodemon server.js",
