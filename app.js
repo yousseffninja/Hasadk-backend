@@ -7,6 +7,9 @@ const xss = require('xss-clean');
 const cookieParser = require('cookie-parser');
 const session = require('express-session');
 
+const globalErrorHandler = require('./controllers/errorController');
+const AppError = require('./utils/appError');
+
 const app = express();
 app.enable('trust proxy');
 app.use(helmet({
@@ -48,8 +51,10 @@ app.use((req, res, next) => {
     next();
 });
 
-// app.all('*', (req, res, next) => {
-//     next(new AppError(`Can't find ${req.originalUrl} on this server!`, 404));
-// });
+app.all('*', (req, res, next) => {
+    next(new AppError(`Can't find ${req.originalUrl} on this server!`, 404));
+});
+
+app.use(globalErrorHandler);
 
 module.exports = app;
