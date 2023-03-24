@@ -9,6 +9,13 @@ const session = require('express-session');
 
 const globalErrorHandler = require('./controllers/errorController');
 const AppError = require('./utils/appError');
+const productRouter = require('./routes/productRoutes');
+const userRouter = require('./routes/userRoutes');
+const categoryRouter = require('./routes/categoryRoutes');
+const reviewRouter = require('./routes/reviewRoutes');
+const typeRoutes = require('./routes/productTypeRoutes');
+const offerEventRoute = require('./routes/offerEventRoutes');
+const offerHeaderRoute = require('./routes/offerHeaderRoutes');
 
 const app = express();
 app.enable('trust proxy');
@@ -50,6 +57,14 @@ app.use((req, res, next) => {
     console.log(req.cookies);
     next();
 });
+
+app.use('/api/v1/products', productRouter);
+app.use('/api/v1/users', userRouter);
+app.use('/api/v1/categories', categoryRouter);
+app.use('/api/v1/reviews', reviewRouter);
+app.use('/api/v1/types', typeRoutes);
+app.use('/api/v1/offerEvent', offerEventRoute);
+app.use('/api/v1/offerHeader', offerHeaderRoute);
 
 app.all('*', (req, res, next) => {
     next(new AppError(`Can't find ${req.originalUrl} on this server!`, 404));
