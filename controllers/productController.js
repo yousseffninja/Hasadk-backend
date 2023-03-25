@@ -1,4 +1,6 @@
 const Product = require('../models/productModel');
+const Category = require('../models/categoryModel');
+const ProductType = require('../models/productTypeModel');
 const catchAsync = require('../utils/catchAsync');
 const factory = require('./handlerFactory');
 const {promisify} = require("util");
@@ -47,6 +49,32 @@ exports.uploadPhoto = catchAsync(async (req, res, next) => {
     })
 })
 
-exports.createProduct = factory.createOne(Product);
+exports.createProduct = catchAsync(async (req, res, next) => {
+    const newProduct = await Product.create(req.body);
+    await Category.findByIdAndUpdate(req.body.categoryId, {
+        $push: { "ProductsIds": newProduct.id }
+    });
+    await ProductType.findByIdAndUpdate(req.body.typeId, {
+        $push: { "productsIds": newProduct.id }
+    });
+    res.status(201).json({
+       status: 'sucess',
+       newProduct
+    });
+});
+
 exports.updateProduct = factory.updateOne(Product);
-exports.deleteProduct = factory.deleteOne(Product);
+
+exports.deleteProduct = catchAsync(async (req, res, next) => {
+    const currentProduct = await Product.findById(req.params.id)
+    await ProductType.findOneAndUpdate(currentProduct.typeId, {
+        $pull: { "productsIds": req.params.id }
+    });
+    await Category.findByIdAndUpdate(currentProduct.categoryId, {
+        $pull: { "ProductsIds": req.params.id }
+    });
+    await ProductType.findByIdAndDelete(req.params.id);
+    res.status(204).json({
+        status: 'Deleting Success',
+    })
+})

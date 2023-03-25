@@ -13,8 +13,16 @@ const productTypeSchema = new mongoose.Schema({
             required: [true, 'A product type must have a description'],
             trim: true,
         },
-        category: {
-            type: mongoose.Schema.ObjectId
+        categoryId: {
+            type: mongoose.Schema.ObjectId,
+            ref: 'Category',
+            required: true,
+        },
+        productsIds: {
+            type: [{
+                type: mongoose.Schema.ObjectId,
+                ref: 'Product',
+            }]
         },
         image: {
             type: String

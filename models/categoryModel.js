@@ -13,6 +13,18 @@ const CategorySchema = new mongoose.Schema({
             required: [true, 'A category must have a description'],
             trim: true,
         },
+        ProductsIds: {
+            type: [{
+                type: mongoose.Schema.ObjectId,
+                ref: 'Product'
+            }]
+        },
+        ProductTypesIds: {
+            type: [{
+                type: mongoose.Schema.ObjectId,
+                ref: 'Product_Type',
+            }],
+        },
         image: {
             type: String
         },
