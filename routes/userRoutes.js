@@ -12,6 +12,8 @@ router.param('id', (req, res, next, val) => {
 
 router.post('/signup', authController.signup);
 router.post('/login', authController.login);
+router.get('/logout', authController.logout);
+router.get('/isLoggedIn', authController.isLoggedIn);
 
 router.use(authController.protect);
 
