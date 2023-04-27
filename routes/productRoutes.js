@@ -14,6 +14,10 @@ router
     );
 
 router
+    .route('/search/:key')
+    .get(productController.searchProduct);
+
+router
     .route('/:id')
     .get(productController.getProduct)
     .patch(

@@ -64,6 +64,7 @@ exports.createProduct = catchAsync(async (req, res, next) => {
 });
 
 exports.updateProduct = factory.updateOne(Product);
+exports.searchProduct = factory.search(Product)
 
 exports.deleteProduct = catchAsync(async (req, res, next) => {
     const currentProduct = await Product.findById(req.params.id)

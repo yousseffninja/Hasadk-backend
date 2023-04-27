@@ -66,6 +66,27 @@ exports.getOne = (Model, popOptions) =>
         });
     });
 
+exports.search = (Model) =>
+    catchAsync(async (req, res, next) => {
+        let filter = {};
+        if (req.params.id) filter = { model: req.params.id };
+        const key = req.params.key
+
+        const features = new APIFeatures(Model.find({name:{ $regex:'.*'+key+'.*'} }), req.query)
+            .filter()
+            .sort()
+            .limitFields()
+            .Pagination();
+        const doc = await features.query;
+        res.status(200).json({
+            status: 'success',
+            results: doc.length,
+            data: {
+                doc,
+            },
+        });
+    });
+
 exports.getAll = (Model) =>
     catchAsync(async (req, res, next) => {
         let filter = {};
