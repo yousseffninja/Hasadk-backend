@@ -14,6 +14,13 @@ router
     );
 
 router
+    .route('/favourites')
+    .get(
+        authController.protect,
+        productController.getLovedProducts
+    )
+
+router
     .route('/search/:key')
     .get(productController.searchProduct);
 

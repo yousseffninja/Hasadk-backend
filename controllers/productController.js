@@ -63,6 +63,20 @@ exports.createProduct = catchAsync(async (req, res, next) => {
     });
 });
 
+exports.getLovedProducts = catchAsync(async (req, res, next) => {
+   const user = await User.findById(req.user.id);
+   const ids = user.favouriteProduct;
+   const products = await Product.find({
+       _id: {
+           $in: ids
+       }
+   });
+   res.status(200).json({
+       status: "success",
+       products
+   });
+});
+
 exports.updateProduct = factory.updateOne(Product);
 exports.searchProduct = factory.search(Product)
 
