@@ -78,12 +78,6 @@ const userSchema = new mongoose.Schema({
     passwordChangedAt: {
         type: Date,
     },
-    passwordResetToken: {
-        type: String,
-    },
-    passwordResetExpires: {
-        type: Date,
-    },
     createdAt: {
         type: Date,
         default: Date.now()
@@ -96,6 +90,9 @@ const userSchema = new mongoose.Schema({
         default: true,
         select: false,
     },
+    passwordResetToken: String,
+    passwordResetTokenOTP: String,
+    passwordResetExpires: Date,
 },{
     timestamps: true,
 });
@@ -153,6 +150,21 @@ userSchema.methods.createPasswordResetToken = function () {
     console.log({ resetToken }, this.passwordResetToken);
 
     this.passwordResetExpires = Date.now() + 10 * 60 * 1000;
+    return resetToken;
+};
+
+userSchema.methods.createPasswordResetTokenOTP = function() {
+    const resetToken = Math.floor(100000 + Math.random() * 900000).toString()
+
+    this.passwordResetTokenOTP = crypto
+        .createHash('sha256')
+        .update(resetToken)
+        .digest('hex');
+
+    console.log({ resetToken }, this.passwordResetToken);
+
+    this.passwordResetExpires = Date.now() + 10 * 60 * 1000;
+
     return resetToken;
 };
 
