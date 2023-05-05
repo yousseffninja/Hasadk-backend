@@ -50,6 +50,9 @@ exports.uploadPhoto = catchAsync(async (req, res, next) => {
 })
 
 exports.createProduct = catchAsync(async (req, res, next) => {
+    const user = await User.findById(req.user.id)
+    req.body.uploaderId = user.id;
+    req.body.uploaderName = `${user.firstName ${user.lastName}}`
     const newProduct = await Product.create(req.body);
     await Category.findByIdAndUpdate(req.body.categoryId, {
         $push: { "ProductsIds": newProduct.id }

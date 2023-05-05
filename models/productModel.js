@@ -1,6 +1,7 @@
 const mongoose = require('mongoose');
 const validator = require('validator')
 const {protect} = require("../controllers/authController");
+const {Mongoose} = require("mongoose");
 
 const productSchema = new mongoose.Schema({
     name: {
@@ -61,6 +62,13 @@ const productSchema = new mongoose.Schema({
         type: Number,
         min: 0,
         max: 100,
+    },
+    uploaderId: {
+        type: Mongoose.Schema.ObjectId,
+        ref: 'user'
+    },
+    uploaderName: {
+        type: String,
     },
     status: Boolean,
     createdAt: {
