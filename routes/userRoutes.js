@@ -66,4 +66,11 @@ router
     .patch(userController.updateUser)
     .delete(userController.deleteUser);
 
+router
+    .route('/seller/:id')
+    .get(
+        authController.protect,
+        userController.getSeller
+    );
+
 module.exports = router;

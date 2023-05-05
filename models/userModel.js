@@ -58,6 +58,13 @@ const userSchema = new mongoose.Schema({
         type:String,
         validate: validator.isURL
     },
+    twitterUrl: {
+        type:String,
+        validate: validator.isURL
+    },
+    description: {
+        type:String
+    },
     role:{
         type: String,
         enum: ['user', 'partners', 'admin', 'seller'],

@@ -1,4 +1,5 @@
 const User = require('../models/userModel');
+const Product = require('../models/productModel');
 const AppError = require('../utils/appError');
 const catchAsync = require('../utils/catchAsync');
 const factory = require('./handlerFactory');
@@ -58,6 +59,20 @@ exports.createUser = catchAsync(async (req, res, next) => {
         user: newUser
     });
 });
+
+exports.getSeller = catchAsync(async (req, res, next) => {
+    const user = await User.findById(req.params.id);
+    const getUserProduct = await Product.find({
+        uploaderId: {
+            $in: user.id
+        }
+    })
+    res.status(201).json({
+        status: 'success',
+        user,
+        getUserProduct
+    });
+})
 
 exports.getUsers = factory.getAll(User);
 exports.getUser = factory.getOne(User);
