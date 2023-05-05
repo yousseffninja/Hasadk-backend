@@ -51,17 +51,7 @@ exports.deleteMe = catchAsync(async (req, res, next) => {
 });
 
 exports.createUser = catchAsync(async (req, res, next) => {
-    const newUser = await User.create({
-        firstName: req.body.firstName,
-        lastName: req.body.lastName,
-        email: req.body.email,
-        username: req.body.username,
-        telephone: req.body.telephone,
-        password: req.body.password,
-        passwordConfirm: req.body.passwordConfirm,
-        passwordChangedAt: req.body.passwordChangedAt,
-        role: req.body.role,
-    });
+    const newUser = await User.create(req.body);
     res.status(201).json({
         status: 'success',
         message: 'user Created Successful',

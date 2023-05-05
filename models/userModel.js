@@ -38,9 +38,29 @@ const userSchema = new mongoose.Schema({
             message: 'Provided phone number is invalid.'
         },
     },
+    whatsapp: {
+        type: String,
+        required: [true, 'Please provide your whatsapp'],
+        unique: true,
+        validate: {
+            validator: function(v) {
+                const re = /^01[0125][0-9]{8}$/;
+                return (!v || !v.trim().length) || re.test(v)
+            },
+            message: 'Provided phone number is invalid.'
+        },
+    },
+    facebookUrl:{
+        type:String,
+        validate: validator.isURL
+    },
+    instaUrl: {
+        type:String,
+        validate: validator.isURL
+    },
     role:{
         type: String,
-        enum: ['user', 'partners', 'admin'],
+        enum: ['user', 'partners', 'admin', 'seller'],
         default: 'user',
     },
     birthDate: {
