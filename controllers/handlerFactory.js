@@ -1,6 +1,7 @@
 const catchAsync = require('../utils/catchAsync');
-const AppError = require('../utils/appError')
-const APIFeatures = require('../utils/apiFeatures')
+const AppError = require('../utils/appError');
+const APIFeatures = require('../utils/apiFeatures');
+const User = require('../models/userModel');
 
 exports.deleteOne = (Model) =>
     catchAsync(async (req, res, next) => {
@@ -98,6 +99,10 @@ exports.getAll = (Model) =>
             .limitFields()
             .Pagination();
         const doc = await features.query;
+        const user = await User.findById(req.user.id);
+        doc.forEach((element, index) => {
+            doc[index].status = !!user.favouriteProduct.includes(element.id);
+        })
         res.status(200).json({
             status: 'success',
             results: doc.length,

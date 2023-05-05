@@ -2,7 +2,7 @@ const Review = require('../models/reviewModel');
 const factory = require('./handlerFactory');
 
 exports.setProductUserIds = (req, res, next) => {
-    if (!req.body.product) req.body.tour = req.params.product;
+    if (!req.body.product) req.body.product = req.params.product;
     if (!req.body.user) req.body.user = req.user.id;
     next();
 };

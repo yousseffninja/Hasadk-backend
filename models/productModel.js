@@ -40,7 +40,7 @@ const productSchema = new mongoose.Schema({
     },
     ratingsAverage: {
         type: Number,
-        default: 0,
+        default: 1,
         min: [1, 'Rating must be above 1.0'],
         max: [5, 'Rating must be less 5.0'],
         set: (val) => Math.round(val * 10) / 10,
@@ -53,6 +53,16 @@ const productSchema = new mongoose.Schema({
         type: Number,
         required: [true, 'A product must have a name'],
     },
+    discount: {
+        type: String,
+        enum: ['Success', 'Expire']
+    },
+    discountPerc: {
+        type: Number,
+        min: 0,
+        max: 100,
+    },
+    status: Boolean,
     createdAt: {
         type: Date,
         default: Date.now(),
@@ -65,6 +75,8 @@ const productSchema = new mongoose.Schema({
     }
 },{
     timestamps: true,
+    toJSON: { virtuals: true },
+    toObject: { virtuals: true },
 });
 
 productSchema.index({ price: 1, ratingsAverage: -1 });
