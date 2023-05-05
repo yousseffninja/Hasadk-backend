@@ -64,7 +64,7 @@ const productSchema = new mongoose.Schema({
         max: 100,
     },
     uploaderId: {
-        type: Mongoose.Schema.ObjectId,
+        type: mongoose.Schema.ObjectId,
         ref: 'user'
     },
     uploaderName: {
