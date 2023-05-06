@@ -55,7 +55,6 @@ router
     .get(userController.getUsers)
     .post(
         authController.protect,
-        authController.restrictTo('admin'),
         userController.createUser
     );
 
