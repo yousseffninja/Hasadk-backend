@@ -40,7 +40,6 @@ const userSchema = new mongoose.Schema({
     },
     whatsapp: {
         type: String,
-        required: [true, 'Please provide your whatsapp'],
         unique: true,
         validate: {
             validator: function(v) {
