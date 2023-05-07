@@ -21,7 +21,7 @@ exports.getMe = (req, res, next) =>{
 
 exports.updateMe = catchAsync(async (req, res, next) => {
     if(req.body.password || req.body.passwordConfirm) {
-        return next(AppError(
+        return next(new AppError(
             'This route is not for password updates. please use /updateMyPassword',
             400)
         );
@@ -73,6 +73,30 @@ exports.getSeller = catchAsync(async (req, res, next) => {
         getUserProduct
     });
 })
+
+exports.likeSeller = catchAsync(async (req, res, next) => {
+    const sellerId = req.params.id;
+    const userId = req.user.id;
+    const seller = await User.findById(sellerId);
+    const sellerLikersIds = seller.likes;
+    if(!['seller', 'partners'].includes(seller.role)){
+        return next(new AppError('You can not like this account because it is nether seller nor partner', 403));
+    }
+    if(sellerLikersIds.includes(userId)){
+        await User.findByIdAndUpdate(sellerId, {
+            $pull: { "likes": userId }
+        });
+    } else {
+        await User.findByIdAndUpdate(sellerId, {
+            $push: { "likes": userId }
+        });
+    }
+
+    res.status(201).json({
+        status: 'success',
+    })
+});
+
 
 exports.getUsers = factory.getAll(User);
 exports.getUser = factory.getOne(User);

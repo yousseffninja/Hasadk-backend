@@ -70,6 +70,10 @@ router
     .get(
         authController.protect,
         userController.getSeller
+    )
+    .patch(
+        authController.protect,
+        userController.likeSeller
     );
 
 module.exports = router;

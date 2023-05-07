@@ -69,6 +69,10 @@ const userSchema = new mongoose.Schema({
         enum: ['user', 'partners', 'admin', 'seller'],
         default: 'user',
     },
+    likes: [{
+        type: mongoose.Schema.ObjectId,
+        ref: 'user',
+    }],
     birthDate: {
         type: Date,
         validate: [validator.isDate, 'Please provide a valid date']
