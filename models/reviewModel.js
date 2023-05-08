@@ -1,8 +1,10 @@
-const mongoose = require('mongoose')
-const Product = require('./productModel')
+const mongoose = require('mongoose');
+const Product = require('./productModel');
+const User = require('./userModel');
 
 const reviewSchema = new mongoose.Schema(
     {
+        fullName: String,
         review: {
             type: String,
             required: [true, 'Review can not be empty!'],
@@ -77,14 +79,12 @@ reviewSchema.post('save', function () {
     this.constructor.calcAverageRatings(this.product);
 });
 
-reviewSchema.pre(/^fineOneAnd/, async function (next) {
+reviewSchema.pre(/^findOneAnd/, async function (next) {
     this.r = await this.findOne();
     next();
 });
 
-reviewSchema.post(/^fineOneAnd/, async function () {
-    await this.r.constructor.calcAverageRatings(this.r.product);
-});
+
 
 const Review = mongoose.model('Review', reviewSchema);
 

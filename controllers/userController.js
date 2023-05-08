@@ -6,10 +6,8 @@ const factory = require('./handlerFactory');
 
 const filterObj = (obj, ...allowedFields) => {
     const newObj = {};
-    Object.keys(obj).forEach((el) => {
-        if (allowedFields.includes(el)) {
-            newObj[el] = obj[el];
-        }
+    Object.keys(obj).forEach(el => {
+        if (allowedFields.includes(el)) newObj[el] = obj[el];
     });
     return newObj;
 };
@@ -27,7 +25,9 @@ exports.updateMe = catchAsync(async (req, res, next) => {
         );
     }
 
-    const filteredBody = filterObj(req.body, 'username', 'email');
+    const filteredBody = filterObj(req.body, "firstName", "lastName", "username", "telephone");
+
+    console.log(filteredBody);
 
     const updatedUser = await User.findByIdAndUpdate(req.user.id, filteredBody, {
         new: true,
