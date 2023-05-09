@@ -25,7 +25,7 @@ exports.updateMe = catchAsync(async (req, res, next) => {
         );
     }
 
-    const filteredBody = filterObj(req.body, "firstName", "lastName", "username", "telephone", "whatsapp", "facebookUrl", "instaUrl", "twitterUrl", "description");
+    const filteredBody = filterObj(req.body, "firstName", "lastName", "username", "telephone", "whatsapp", "facebookUrl", "instaUrl", "twitterUrl", "description", "image");
 
     const updatedUser = await User.findByIdAndUpdate(req.user.id, filteredBody, {
         new: true,
