@@ -79,10 +79,7 @@ reviewSchema.post('save', function () {
     this.constructor.calcAverageRatings(this.product);
 });
 
-reviewSchema.pre(/^findOneAnd/, async function (next) {
-    this.r = await this.findOne();
-    next();
-});
+
 
 
 
