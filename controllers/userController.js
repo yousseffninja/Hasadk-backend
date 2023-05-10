@@ -83,8 +83,6 @@ exports.getSeller = catchAsync(async (req, res, next) => {
         userRatingAverage += e.ratingsAverage
     })
 
-    user.userRatingAverage = userRatingAverage/getUserProduct.length
-
     res.status(201).json({
         status: 'success',
         user,
