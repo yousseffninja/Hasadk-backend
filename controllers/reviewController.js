@@ -28,6 +28,7 @@ exports.getAllReviews = catchAsync(async (req, res, next) =>{
         }
         const user = await User.findById(e.user._id);
         doc[i].userName = `${user.firstName} ${user.lastName}`
+        doc[i].image = user.image
     }
     const user = await User.findById(req.user.id);
     doc.forEach((element, index) => {
