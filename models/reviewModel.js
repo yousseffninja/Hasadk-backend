@@ -28,6 +28,7 @@ const reviewSchema = new mongoose.Schema(
             ref: 'User',
             required: [true, 'Review must belongs to a user'],
         },
+        userName: String,
     },
     {
         timestamps: true,
