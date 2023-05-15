@@ -70,6 +70,8 @@ const productSchema = new mongoose.Schema({
     uploaderName: {
         type: String,
     },
+    sellerPhone: String,
+    sellerWhatsapp: String,
     status: Boolean,
     createdAt: {
         type: Date,

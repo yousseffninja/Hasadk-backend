@@ -100,9 +100,15 @@ exports.getAll = (Model) =>
             .Pagination();
         const doc = await features.query;
         const user = await User.findById(req.user.id);
-        doc.forEach((element, index) => {
+        for (const element of doc) {
+            const index = doc.indexOf(element);
             doc[index].status = !!user.favouriteProduct.includes(element.id);
-        })
+            if(doc[index].uploaderId){
+                const userSeller = await User.findById(doc[index].uploaderId)
+                doc[index].sellerPhone = userSeller.telephone
+                doc[index].sellerWhatsapp = userSeller.whatsapp
+            }
+        }
         res.status(200).json({
             status: 'success',
             results: doc.length,
