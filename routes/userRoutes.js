@@ -22,9 +22,13 @@ router.get('/isLoggedIn',
 router.post('/forgotPassword', authController.forgotPassword);
 router.patch('/resetPassword/:token', authController.resetPassword);
 
-router.use(authController.protect);
+// router.use(authController.protect);
 
-router.patch('/updateMyPassword', authController.updatePassword);
+router.patch(
+    '/updateMyPassword',
+    authController.protect,
+    authController.updatePassword
+);
 
 router.get(
     '/me',
@@ -53,9 +57,7 @@ router.delete(
 router
     .route('/')
     .get(userController.getUsers)
-    .post(
-        userController.createUser
-    );
+    .post(userController.createUser);
 
 
 router
