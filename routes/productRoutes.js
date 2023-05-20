@@ -32,7 +32,7 @@ router
     .get(productController.getProduct)
     .patch(
         authController.protect,
-        authController.restrictTo('admin'),
+        authController.restrictTo('admin', 'seller', "partners"),
         productController.updateProduct,
     )
     .delete(
