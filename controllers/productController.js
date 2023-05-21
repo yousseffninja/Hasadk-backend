@@ -6,6 +6,7 @@ const factory = require('./handlerFactory');
 const {promisify} = require("util");
 const jwt = require("jsonwebtoken");
 const User = require('../models/userModel')
+const cloudinary = require("../utils/cloudinary");
 
 exports.getAllProducts = factory.getAll(Product);
 exports.getProduct = factory.getOne(Product, { path: 'reviews' });
@@ -96,3 +97,20 @@ exports.deleteProduct = catchAsync(async (req, res, next) => {
         status: 'Deleting Success',
     })
 })
+
+exports.uploadProductPhoto = catchAsync(async (req, res, next) => {
+    const product = await Product.findById(req.params.id)
+    const result = await cloudinary.uploader.upload(req.file.path, {
+        public_id: `/${product._id}/${product._id}Photo`,
+        folder: 'products',
+        resource_type: 'image',
+    });
+    const updatedProduct =  await Product.findByIdAndUpdate(req.params.id, {
+        productUrl: result.secure_url,
+        cloudinaryId: result.public_id,
+    });
+    res.status(201).json({
+        status: 'success',
+        updatedProduct
+    });
+});

@@ -73,6 +73,8 @@ const productSchema = new mongoose.Schema({
     sellerPhone: String,
     sellerWhatsapp: String,
     status: Boolean,
+    photoPhoto: String,
+    cloudinaryId: String,
     createdAt: {
         type: Date,
         default: Date.now(),

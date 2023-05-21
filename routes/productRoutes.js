@@ -1,6 +1,7 @@
 const express = require('express');
 const productController = require('../controllers/productController');
 const authController = require('../controllers/authController');
+const upload = require("../utils/multer");
 
 const router = express.Router();
 
@@ -21,6 +22,14 @@ router
     .get(
         authController.protect,
         productController.getLovedProducts
+    )
+
+router
+    .route('/uploadProductPhoto/:id')
+    .patch(
+        upload.single('image'),
+        authController.protect,
+        productController.uploadProductPhoto
     )
 
 router
