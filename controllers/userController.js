@@ -3,6 +3,7 @@ const Product = require('../models/productModel');
 const AppError = require('../utils/appError');
 const catchAsync = require('../utils/catchAsync');
 const factory = require('./handlerFactory');
+const cloudinary = require("../utils/cloudinary");
 
 const filterObj = (obj, ...allowedFields) => {
     const newObj = {};
@@ -112,6 +113,23 @@ exports.likeSeller = catchAsync(async (req, res, next) => {
     res.status(201).json({
         status: 'success',
     })
+});
+
+exports.uploadPersonalPhoto = catchAsync(async (req, res, next) => {
+    const user = await User.findById(req.user.id)
+    const result = await cloudinary.uploader.upload(req.file.path, {
+        public_id: `/${user.username}/${user.username}PersonalPhoto`,
+        folder: 'users',
+        resource_type: 'image',
+    });
+    const updatedUser =  await User.findByIdAndUpdate(req.user.id, {
+        userPhoto: result.secure_url,
+        cloudinaryId: result.public_id,
+    });
+    res.status(201).json({
+        status: 'success',
+        updatedUser
+    });
 });
 
 
