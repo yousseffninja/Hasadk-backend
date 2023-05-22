@@ -7,8 +7,28 @@ const {promisify} = require("util");
 const jwt = require("jsonwebtoken");
 const User = require('../models/userModel')
 const cloudinary = require("../utils/cloudinary");
+const APIFeatures = require("../utils/apiFeatures");
 
-exports.getAllProducts = factory.getAll(Product);
+// exports.getAllProducts = factory.getAll(Product);
+
+exports.getAllProducts = catchAsync(async (req, res, next) => {
+    let filter = {};
+    if (req.params.id) filter = { model: req.params.id };
+    const features = new APIFeatures(Product.find(filter), req.query)
+        .filter()
+        .sort()
+        .limitFields()
+        .Pagination();
+    const doc = await features.query;
+    res.status(200).json({
+        status: 'success',
+        results: doc.length,
+        data: {
+            doc,
+        },
+    });
+})
+
 exports.getProduct = factory.getOne(Product, { path: 'reviews' });
 exports.loveProduct = catchAsync(async (req, res, next) => {
     const token = req.headers.authorization.split(' ')[1];
