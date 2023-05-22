@@ -12,7 +12,7 @@ router
     )
     .post(
         authController.protect,
-        authController.restrictTo('admin'),
+        authController.restrictTo('admin', 'seller', 'partners'),
         categoryController.createCategory
     );
 
@@ -21,12 +21,12 @@ router
     .get(categoryController.getCategory)
     .patch(
         authController.protect,
-        authController.restrictTo('admin'),
+        authController.restrictTo('admin', 'seller', 'partners'),
         categoryController.updateCategory
     )
     .delete(
         authController.protect,
-        authController.restrictTo('admin'),
+        authController.restrictTo('admin', 'seller', 'partners'),
         categoryController.deleteCategory
     );
 

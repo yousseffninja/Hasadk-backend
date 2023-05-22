@@ -13,7 +13,7 @@ router
     )
     .post(
         authController.protect,
-        authController.restrictTo('admin'),
+        authController.restrictTo('admin', 'seller', 'partners'),
         offerEventController.createOfferEvent
     );
 
@@ -22,12 +22,12 @@ router
     .get(offerEventController.getOfferEvent)
     .patch(
         authController.protect,
-        authController.restrictTo('admin'),
+        authController.restrictTo('admin', 'seller', 'partners'),
         offerEventController.updateOfferEvent
     )
     .delete(
         authController.protect,
-        authController.restrictTo('admin'),
+        authController.restrictTo('admin', 'seller', 'partners'),
         offerEventController.deleteOfferEvent
     );
 

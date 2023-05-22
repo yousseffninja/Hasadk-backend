@@ -76,11 +76,11 @@ router
     .route('/:id')
     .get(userController.getUser)
     .patch(
-        authController.restrictTo('admin'),
+        authController.restrictTo('admin', 'seller', 'partners'),
         userController.updateUser
     )
     .delete(
-        authController.restrictTo('admin'),
+        authController.restrictTo('admin', 'seller', 'partners'),
         userController.deleteUser
     );
 

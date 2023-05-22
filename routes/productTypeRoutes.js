@@ -13,7 +13,7 @@ router
     )
     .post(
         authController.protect,
-        authController.restrictTo('admin'),
+        authController.restrictTo('admin', 'seller', 'partners'),
         productTypeController.createType
     );
 
@@ -22,12 +22,12 @@ router
     .get(productTypeController.getType)
     .patch(
         authController.protect,
-        authController.restrictTo('admin'),
+        authController.restrictTo('admin', 'seller', 'partners'),
         productTypeController.updateType
     )
     .delete(
         authController.protect,
-        authController.restrictTo('admin'),
+        authController.restrictTo('admin', 'seller', 'partners'),
         productTypeController.deleteType
     );
 

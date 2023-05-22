@@ -14,7 +14,7 @@ router
         reviewController.getAllReviews
     )
     .post(
-        authController.restrictTo('user', 'admin'),
+        authController.restrictTo('admin', 'seller', 'partners'),
         reviewController.setProductUserIds,
         reviewController.createReview
     );
@@ -23,11 +23,11 @@ router
     .route('/:id')
     .get(reviewController.getReview)
     .patch(
-        authController.restrictTo('admin', 'user'),
+        authController.restrictTo('admin', 'seller', 'partners'),
         reviewController.updateReview
     )
     .delete(
-        authController.restrictTo('admin', 'user'),
+        authController.restrictTo('admin', 'seller', 'partners'),
         reviewController.deleteReview
     );
 

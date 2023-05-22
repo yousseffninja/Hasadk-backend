@@ -13,7 +13,7 @@ router
     )
     .post(
         authController.protect,
-        authController.restrictTo('admin'),
+        authController.restrictTo('admin', 'seller', 'partners'),
         offerHeaderController.createOfferHeader
     );
 
@@ -22,12 +22,12 @@ router
     .get(offerHeaderController.getOfferHeader)
     .patch(
         authController.protect,
-        authController.restrictTo('admin'),
+        authController.restrictTo('admin', 'seller', 'partners'),
         offerHeaderController.updateOfferHeader
     )
     .delete(
         authController.protect,
-        authController.restrictTo('admin'),
+        authController.restrictTo('admin', 'seller', 'partners'),
         offerHeaderController.deleteOfferHeader
     );
 

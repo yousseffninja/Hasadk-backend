@@ -46,7 +46,7 @@ router
     )
     .delete(
         authController.protect,
-        authController.restrictTo('admin'),
+        authController.restrictTo('admin', 'seller', 'partners'),
         productController.deleteProduct
     )
 
