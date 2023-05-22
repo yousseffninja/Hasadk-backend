@@ -94,7 +94,7 @@ exports.deleteMe = catchAsync(async (req, res, next) => {
 
 exports.createUser = catchAsync(async (req, res, next) => {
     const newUser = await User.create(req.body);
-    createSendToken(user, 201, res);
+    createSendToken(newUser, 201, res);
 });
 
 exports.getSeller = catchAsync(async (req, res, next) => {
