@@ -136,6 +136,7 @@ exports.deleteProduct = catchAsync(async (req, res, next) => {
         $pull: { "ProductsIds": req.params.id }
     });
     await ProductType.findByIdAndDelete(req.params.id);
+    await Product.findByIdAndDelete(req.params.id)
     res.status(201).json({
         status: 'Deleting Success',
     })
