@@ -137,7 +137,7 @@ exports.uploadProductPhoto = catchAsync(async (req, res, next) => {
         resource_type: 'image',
     });
     const updatedProduct =  await Product.findByIdAndUpdate(req.params.id, {
-        productUrlpostman: result.secure_url,
+        photoPhoto: result.secure_url,
         cloudinaryId: result.public_id,
     });
     res.status(201).json({
