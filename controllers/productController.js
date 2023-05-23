@@ -40,7 +40,18 @@ exports.getAllProducts = catchAsync(async (req, res, next) => {
     });
 })
 
-exports.getProduct = factory.getOne(Product, { path: 'reviews' });
+exports.getProduct = catchAsync(async (req, res, next) => {
+    const product = await Product.findById(req.params.id);
+    const user = await User.findById(product.uploaderId)
+    product.userPhoto = user?.userPhoto;
+
+    product.save({ validateBeforeSave: false });
+
+    res.status(200).json({
+        status: "Success",
+        product
+    })
+})
 exports.loveProduct = catchAsync(async (req, res, next) => {
     const token = req.headers.authorization.split(' ')[1];
     const decoded = await promisify(jwt.verify)(token, process.env.JWT_SECRET);
