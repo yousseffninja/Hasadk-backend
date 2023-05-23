@@ -111,6 +111,12 @@ exports.getSeller = catchAsync(async (req, res, next) => {
         userRatingAverage += e.ratingsAverage
     })
 
+    for (const e of getUserProduct) {
+        const i = getUserProduct.indexOf(e);
+        getUserProduct[i].uploaderName = `${user.firstName} ${user.lastName}`
+        getUserProduct[i].userPhoto = user.userPhoto
+    }
+
     res.status(201).json({
         status: 'success',
         user,

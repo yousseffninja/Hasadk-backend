@@ -29,7 +29,7 @@ const reviewSchema = new mongoose.Schema(
             required: [true, 'Review must belongs to a user'],
         },
         userName: String,
-        image: String,
+        userPhoto: String,
     },
     {
         timestamps: true,
