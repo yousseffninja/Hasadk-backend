@@ -25,7 +25,7 @@ router
         reviewController.updateReview
     )
     .delete(
-        authController.restrictTo('admin', 'seller', 'partners'),
+        // authController.restrictTo('admin', 'seller', 'partners'),
         reviewController.deleteReview
     );
 

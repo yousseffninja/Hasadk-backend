@@ -54,7 +54,7 @@ exports.deleteReview = catchAsync(async (req, res, next) => {
         data = await Review.findByIdAndDelete(req.params.id)
     }
     else {
-        return next(new AppError('This Review did not belont to you!', 403));
+        return next(new AppError('This Review did not belong to you!', 403));
     }
 
     if (!data) {
