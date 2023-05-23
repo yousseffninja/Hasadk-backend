@@ -20,6 +20,17 @@ exports.getAllProducts = catchAsync(async (req, res, next) => {
         .limitFields()
         .Pagination();
     const doc = await features.query;
+
+    for (const e of doc) {
+        const i = doc.indexOf(e);
+        if(e.uploaderId== null) {
+            continue;
+        }
+        const user = await User.findById(e.uploaderId);
+        doc[i].uploaderName = `${user.firstName} ${user.lastName}`
+        doc[i].userPhoto = user.userPhoto
+    }
+
     res.status(200).json({
         status: 'success',
         results: doc.length,

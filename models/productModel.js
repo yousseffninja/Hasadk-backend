@@ -75,6 +75,7 @@ const productSchema = new mongoose.Schema({
     status: Boolean,
     photoPhoto: String,
     cloudinaryId: String,
+    userPhoto: String,
     createdAt: {
         type: Date,
         default: Date.now(),
@@ -102,7 +103,7 @@ productSchema.virtual('reviews', {
 
 productSchema.post(/^find/, function (docs, next) {
     console.log(`Query took ${Date.now() - this.start} millisecond!`);
-    console.log(docs);
+    // console.log(docs);
     next();
 });
 
