@@ -136,7 +136,7 @@ exports.deleteProduct = catchAsync(async (req, res, next) => {
         $pull: { "ProductsIds": req.params.id }
     });
     await ProductType.findByIdAndDelete(req.params.id);
-    res.status(204).json({
+    res.status(201).json({
         status: 'Deleting Success',
     })
 })
@@ -149,7 +149,7 @@ exports.uploadProductPhoto = catchAsync(async (req, res, next) => {
         resource_type: 'image',
     });
     const updatedProduct =  await Product.findByIdAndUpdate(req.params.id, {
-        photoPhoto: result.secure_url,
+        productUrl: result.secure_url,
         cloudinaryId: result.public_id,
     });
     res.status(201).json({

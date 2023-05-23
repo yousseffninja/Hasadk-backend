@@ -62,7 +62,7 @@ exports.deleteType = catchAsync(async  (req, res, next) => {
 
     await productType.findByIdAndDelete(req.params.id);
 
-    res.status(204).json({
+    res.status(201).json({
         status: 'Deleting Successful',
     })
 });
