@@ -42,7 +42,8 @@ exports.getAllProducts = catchAsync(async (req, res, next) => {
 
 exports.getProduct = catchAsync(async (req, res, next) => {
     const product = await Product.findById(req.params.id);
-    const user = await User.findById(product.uploaderId)
+    const user = await User.findById(product.uploaderId);
+    product.uploaderName = `${user?.firstName} ${user?.lastName}`
     product.userPhoto = user?.userPhoto;
 
     product.save({ validateBeforeSave: false });
