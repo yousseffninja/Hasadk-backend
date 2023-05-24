@@ -38,6 +38,17 @@ const userSchema = new mongoose.Schema({
             message: 'Provided phone number is invalid.'
         },
     },
+    whatsapp: {
+        type: String,
+        unique: true,
+        validate: {
+            validator: function(v) {
+                const re = /^01[0125][0-9]{8}$/;
+                return (!v || !v.trim().length) || re.test(v)
+            },
+            message: 'Provided phone number is invalid.'
+        },
+    },
     facebookUrl:{
         type:String,
         validate: validator.isURL
