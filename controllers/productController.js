@@ -118,6 +118,17 @@ exports.getLovedProducts = catchAsync(async (req, res, next) => {
            $in: ids
        }
    });
+
+    for (const e of products) {
+        const i = products.indexOf(e);
+        if(e.uploaderId== null) {
+            continue;
+        }
+        const user = await User.findById(e.uploaderId);
+        products[i].uploaderName = `${user.firstName} ${user.lastName}`
+        products[i].userPhoto = user.userPhoto
+    }
+
    res.status(200).json({
        status: "success",
        products
