@@ -40,7 +40,7 @@ const userSchema = new mongoose.Schema({
     },
     whatsapp: {
         type: String,
-        unique: true,
+        // unique: true,
         validate: {
             validator: function(v) {
                 const re = /^01[0125][0-9]{8}$/;
