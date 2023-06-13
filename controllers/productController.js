@@ -29,6 +29,7 @@ exports.getAllProducts = catchAsync(async (req, res, next) => {
         const user = await User.findById(e.uploaderId);
         doc[i].uploaderName = `${user.firstName} ${user.lastName}`
         doc[i].userPhoto = user.userPhoto
+        doc[i].user = user
     }
 
     res.status(200).json({

@@ -80,6 +80,7 @@ const productSchema = new mongoose.Schema({
         type: Date,
         default: Date.now(),
     },
+    user: Object,
     modifiedAt: {
         type: Date,
     },
