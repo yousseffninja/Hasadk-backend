@@ -23,13 +23,24 @@ exports.getAllProducts = catchAsync(async (req, res, next) => {
 
     for (const e of doc) {
         const i = doc.indexOf(e);
-        if(e.uploaderId== null) {
+        if(e.uploaderId == null) {
             continue;
         }
         const user = await User.findById(e.uploaderId);
         doc[i].uploaderName = `${user.firstName} ${user.lastName}`
         doc[i].userPhoto = user.userPhoto
         doc[i].user = user
+    }
+
+    const userr = await User.findById(req.user.id);
+    for (const element of doc) {
+        const index = doc.indexOf(element);
+        doc[index].status = !!userr.favouriteProduct.includes(element.id);
+        if(doc[index].uploaderId){
+            const userSeller = await User.findById(doc[index].uploaderId)
+            doc[index].sellerPhone = userSeller.telephone
+            doc[index].sellerWhatsapp = userSeller.whatsapp
+        }
     }
 
     res.status(200).json({
@@ -122,7 +133,7 @@ exports.getLovedProducts = catchAsync(async (req, res, next) => {
 
     for (const e of products) {
         const i = products.indexOf(e);
-        if(e.uploaderId== null) {
+        if(e.uploaderId == null) {
             continue;
         }
         const user = await User.findById(e.uploaderId);
