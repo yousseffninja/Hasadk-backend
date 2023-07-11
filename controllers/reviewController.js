@@ -49,8 +49,8 @@ exports.deleteReview = catchAsync(async (req, res, next) => {
     const review = await Review.findById(req.params.id)
 
     let data;
-
-    if (review.user.id === req.user.id){
+    console.log(req.user.role)
+    if (review.user.id === req.user.id || req.user.role === 'admin') {
         data = await Review.findByIdAndDelete(req.params.id)
     }
     else {
